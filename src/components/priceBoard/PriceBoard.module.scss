@@ -1,0 +1,66 @@
+.priceCounterContainer {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  position: relative;
+  width: 252px;
+  height: 252px;
+
+  background: #ffffff;
+  border: 1px solid #005fb8;
+  border-radius: 50%;
+  overflow: hidden;
+
+  .price {
+    color: #005fb8;
+    font-family: Roboto;
+    font-size: 25px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: center;
+    margin-top: 31px;
+  }
+  .priceDisplay {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 70px;
+    line-height: 70px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    color: #000000;
+    margin: 20px 0 0 0;
+  }
+  .priceDescription {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    color: #000000;
+  }
+  .plan {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #005fb8;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    color: #ffff;
+    text-align: center;
+    height: 64px;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+   
+  }
+}

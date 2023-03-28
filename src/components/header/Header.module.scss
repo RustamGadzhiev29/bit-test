@@ -1,0 +1,29 @@
+.header {
+  height: 90px;
+  display: flex;
+  border: 1px solid #dddddd;
+
+  .headerIconContainer {
+    display: flex;
+    align-items: center;
+    margin: 0 0 0 24px;
+
+    .headerIcon {
+      color: #fff;
+      margin: 0 12px 0 0;
+      cursor: pointer;
+
+      svg {
+        height: 43.99327087402344px;
+        width: 44px;
+      }
+    }
+    .title {
+        font-family: 'Roboto';
+font-style: normal;
+font-weight: 600;
+font-size: 20px;
+line-height: 23px;
+    }
+  }
+}

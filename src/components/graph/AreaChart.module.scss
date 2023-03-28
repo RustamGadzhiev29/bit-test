@@ -1,0 +1,67 @@
+.chartContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 236px;
+  height: 126.09px;
+  border: 1px solid #005fb8;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.07);
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  background-color: #ffff;
+
+
+  .titleContainer {
+    height: 19px;
+    background: #005fb8;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 3px 0 3px 0;
+
+    .title {
+      margin-left: 11px;
+      color: #ffff;
+      display: flex;
+      font-family: "Roboto";
+      font-style: normal;
+      font-weight: 300;
+      font-size: 12px;
+    }
+  }
+  .lineContainer {
+    height: 87px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    canvas {
+      border-bottom: 2px solid;
+      border-left: 2px solid;
+      margin-top: 10px;
+    }
+    i {
+      border: solid black;
+      border-width: 0 2px 2px 0;
+      display: inline-block;
+      padding: 3px;
+    }
+    .right {
+      transform: rotate(-45deg);
+      -webkit-transform: rotate(-45deg);
+      position: absolute;
+      bottom: 5.5px;
+      right: 30px;
+    }
+
+    .up {
+      transform: rotate(-135deg);
+      -webkit-transform: rotate(-135deg);
+      position: absolute;
+      left: 27px;
+      top: 29px;
+    }
+  }
+}

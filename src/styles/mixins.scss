@@ -1,0 +1,29 @@
+@import "variables";
+
+
+@mixin vector($left,$top) {
+  position: absolute;
+  width: 0;
+  height: 80%;
+  left: $left;
+  top: $top;
+  border-left: 1px dashed #005FB8;
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+@mixin vectorHorizon($left,$top) {
+  position: absolute;
+  width: 70%;
+  height: 0;
+  left: $left;
+  top: $top;
+  border-top: 1px dashed #005FB8; 
+}
+
+@mixin pseudoEl($height, $width) {
+  content: '';
+  height: $height;
+  width: $width;
+}

@@ -11,3 +11,53 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.ant-menu-light .ant-menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ant-menu-light.ant-menu-inline .ant-menu-item {
+  border-radius: unset;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.ant-menu-inline > .ant-menu-item:hover,
+.ant-menu-inline > .ant-menu-submenu:hover,
+.ant-menu-inline > .ant-menu-item-active,
+.ant-menu-inline > .ant-menu-submenu-active,
+.ant-menu-inline > .ant-menu-item-open,
+.ant-menu-inline > .ant-menu-submenu-open,
+.ant-menu-inline > .ant-menu-item-selected,
+.ant-menu-inline > .ant-menu-submenu-selected {
+  border-left: 2px solid #005FB8ed;
+}
+.ant-menu-light .ant-menu-item-selected {
+  background-color: #E0F1FF;
+}
+.ant-table-wrapper .ant-table.ant-table-small {
+  font-size: 5px;
+}
+.ant-table-wrapper .ant-table-thead >tr>th {
+  background: #005FB8;
+  color: #ffff;
+  border-bottom: 0px;
+  font-weight: 400;
+}
+.ant-table-wrapper .ant-table {
+  line-height: 0;
+  font-family: "Roboto";
+  font-weight: 400;
+  color: #000000;
+}
+.ant-table-tbody > tr > td {
+  height: 20px;
+}
+.ant-table-wrapper .ant-table-thead {
+  height: 19px;
+}
+.ant-table-wrapper table {
+  text-align: center;
+}
