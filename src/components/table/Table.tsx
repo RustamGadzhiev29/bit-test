@@ -4,14 +4,17 @@ import React from "react";
 import { Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 
+import { useAppSelector } from "../../store/store";
+
 import styles from "./Table.module.scss";
 
-interface DataType {
+type DataType = {
   currentValue: number;
   prevValue: number;
-  change: number;
+  change: string;
   timestep: string;
-}
+};
+const PERCENTAGE_VALUE = 100;
 
 const columns: ColumnsType<DataType> = [
   {
@@ -20,7 +23,7 @@ const columns: ColumnsType<DataType> = [
   },
   {
     title: "Текущее значение",
-    dataIndex: "prevValue",
+    dataIndex: "currentValue",
   },
   {
     title: "Предыдущее значение",
@@ -32,72 +35,26 @@ const columns: ColumnsType<DataType> = [
   },
 ];
 
-const data: DataType[] = [
-  {
-    currentValue: 201,
-    prevValue: 213,
-    change: -0.06,
-    timestep: "21.03.2023 11:02",
-  },
-  {
-    currentValue: 222,
-    prevValue: 228,
-    change: -0.03,
-    timestep: "21.03.2023 11:07",
-  },
-  {
-    currentValue: 152,
-    prevValue: 161,
-    change: -0.06,
-    timestep: "21.03.2023 11:12",
-  },
-  {
-    currentValue: 260,
-    prevValue: 242,
-    change: 0.07,
-    timestep: "21.03.2023 11:17",
-  },
-  {
-    currentValue: 260,
-    prevValue: 242,
-    change: 0.07,
-    timestep: "21.03.2023 11:17",
-  },
-  {
-    currentValue: 260,
-    prevValue: 242,
-    change: 0.07,
-    timestep: "21.03.2023 11:17",
-  },
-  {
-    currentValue: 260,
-    prevValue: 242,
-    change: 0.07,
-    timestep: "21.03.2023 11:17",
-  },
-  {
-    currentValue: 260,
-    prevValue: 242,
-    change: 0.07,
-    timestep: "21.03.2023 11:17",
-  },
-  {
-    currentValue: 260,
-    prevValue: 242,
-    change: 0.07,
-    timestep: "21.03.2023 11:17",
-  },
-];
+const DataTable = (): JSX.Element => {
+  const data = useAppSelector((state) => state.data.tableValues);
 
-const DataTable = (): JSX.Element => (
-  <div className={styles.tableContainer}>
-    <Table
-      columns={columns}
-      dataSource={data}
-      size="small"
-      pagination={false}
-    />
-  </div>
-);
+  const modData = data.map((el) => ({
+    ...el,
+    change: `${(el.change * PERCENTAGE_VALUE).toFixed()} %`,
+  }));
+
+  console.log(data);
+
+  return (
+    <div className={styles.tableContainer}>
+      <Table
+        columns={columns}
+        dataSource={modData}
+        size="small"
+        pagination={false}
+      />
+    </div>
+  );
+};
 
 export default DataTable;

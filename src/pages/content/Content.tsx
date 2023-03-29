@@ -21,6 +21,8 @@ export type DisplayBlockType = {
 };
 
 const Content: FC = () => {
+  // console.log("content");
+
   const [isOpen, setIsOpen] = useState(false);
 
   const [currentItems, setCurrentItems] = useState<null | number>(null);

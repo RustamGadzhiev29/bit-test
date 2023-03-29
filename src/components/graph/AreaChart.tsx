@@ -1,6 +1,5 @@
 import React from "react";
 
-import { faker } from "@faker-js/faker";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -11,7 +10,10 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import moment from "moment";
 import { Line } from "react-chartjs-2";
+
+import { useAppSelector } from "../../store/store";
 
 import styles from "./AreaChart.module.scss";
 
@@ -27,6 +29,7 @@ ChartJS.register(
 
 export const options = {
   responsive: true,
+  events: [],
   scales: {
     x: {
       display: false,
@@ -36,6 +39,7 @@ export const options = {
     },
     y: {
       display: false,
+      hover: false,
       grid: {
         display: false,
       },
@@ -48,21 +52,22 @@ export const options = {
   },
 };
 
-const labels = ["January", "February", "March", "April", "May", "June", "July"];
-
-export const data = {
-  labels,
-  datasets: [
-    {
-      data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
-      borderColor: "black",
-      backgroundColor: "#ffff",
-    },
-  ],
-};
-
-// eslint-disable-next-line no-undef
 export const AreaChart = (): JSX.Element => {
+  const data = useAppSelector((state) => state.data.graphValues);
+
+  const values = {
+    labels: data.map((element) => moment(element.timestep).format("DD.MM.YY")),
+    datasets: [
+      {
+        data: data.map((element): number => {
+          return element.currentValue;
+        }),
+        borderColor: "black",
+        backgroundColor: "#ffff",
+      },
+    ],
+  };
+
   return (
     <div className={styles.chartContainer}>
       <div className={styles.titleContainer}>
@@ -70,7 +75,7 @@ export const AreaChart = (): JSX.Element => {
       </div>
       <div className={styles.lineContainer}>
         <i className={styles.up} />
-        <Line options={options} data={data} /> <i className={styles.right} />
+        <Line options={options} data={values} /> <i className={styles.right} />
       </div>
     </div>
   );
