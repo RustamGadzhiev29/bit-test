@@ -1,6 +1,22 @@
 @import "variables";
 
 
+@mixin text($color,$fontFamily,$fontSize, $fontWeight, $lineHeight) {
+  color: $color;
+  font-family: $fontFamily;
+  font-size: $fontSize;
+  font-weight: $fontWeight;
+  line-height: $lineHeight;
+  text-align: center;
+}
+
+@mixin flexStyle($dir, $alineItems, $jusContent) {
+  display: flex;
+  flex-direction: $dir;
+  align-items: $alineItems;
+  justify-content: $jusContent;
+}
+
 @mixin vector($left,$top) {
   position: absolute;
   width: 0;
@@ -8,9 +24,6 @@
   left: $left;
   top: $top;
   border-left: 1px dashed #005FB8;
-  @media (max-width: 768px) {
-    display: none;
-  }
 }
 
 @mixin vectorHorizon($left,$top) {

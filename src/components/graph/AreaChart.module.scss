@@ -1,20 +1,22 @@
+@import "src/styles/variables";
+@import "src/styles/mixins";
+
+
 .chartContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  @include flexStyle(column, center, flex-start);
   width: 236px;
   height: 126.09px;
-  border: 1px solid #005fb8;
+  border: 1px solid $mainColor;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.07);
   border-radius: 10px;
   position: relative;
   overflow: hidden;
-  background-color: #ffff;
+  background-color: $textColor2;
 
 
   .titleContainer {
     height: 19px;
-    background: #005fb8;
+    background: $mainColor;
     position: absolute;
     top: 0;
     left: 0;
@@ -23,27 +25,23 @@
 
     .title {
       margin-left: 11px;
-      color: #ffff;
-      display: flex;
-      font-family: "Roboto";
-      font-style: normal;
-      font-weight: 300;
-      font-size: 12px;
+      color: $textColor2;
+      @include flexStyle (row,  center, start );
+      @include text($textColor2, $mainFont, 12px, 300, 14px);
     }
   }
   .lineContainer {
     height: 87px;
     width: 100%;
-    display: flex;
-    justify-content: center;
+    @include flexStyle (row,  center, center );
 
     canvas {
       border-bottom: 2px solid;
       border-left: 2px solid;
-      margin-top: 10px;
+      margin-top: 57px;
     }
     i {
-      border: solid black;
+      border: 1px solid;
       border-width: 0 2px 2px 0;
       display: inline-block;
       padding: 3px;
@@ -62,6 +60,67 @@
       position: absolute;
       left: 27px;
       top: 29px;
+    }
+  }
+}
+
+.chartContainer1 {
+  @include flexStyle(column, center, flex-start);
+  width: 554px;
+  height: 296px;
+  border: 1px solid $mainColor;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.07);
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  background-color: $textColor2;
+
+
+  .titleContainer {
+    height: 45px;
+    background: $mainColor;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    .title {
+      margin-left: 11px;
+      @include flexStyle (row,  center, start );
+      @include text($textColor2, $mainFont, 20px, 500, 14px);
+      margin: 11px 0px 0 23px;
+    }
+  }
+  .lineContainer {
+    height: 100%;
+    width: 100%;
+    @include flexStyle (row,  center, center );
+    padding: 65px 0 28px 0;
+
+    canvas {
+      border-bottom: 2px solid;
+      border-left: 2px solid;
+    }
+    i {
+      border: solid $textColor1;
+      border-width: 0 2px 2px 0;
+      display: inline-block;
+      padding: 3px;
+    }
+    .right {
+      transform: rotate(-45deg);
+      -webkit-transform: rotate(-45deg);
+      position: absolute;
+      bottom: 25px;
+      right: 75px;
+    }
+
+    .up {
+      transform: rotate(-135deg);
+      -webkit-transform: rotate(-135deg);
+      position: absolute;
+      left: 72px;
+      top: 66px;
     }
   }
 }

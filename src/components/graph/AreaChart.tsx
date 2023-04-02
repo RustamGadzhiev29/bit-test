@@ -17,6 +17,10 @@ import { useAppSelector } from "../../store/store";
 
 import styles from "./AreaChart.module.scss";
 
+export type AreaChartPropsType = {
+  isOnDrop?: boolean;
+};
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -52,7 +56,7 @@ export const options = {
   },
 };
 
-export const AreaChart = (): JSX.Element => {
+export const AreaChart = ({ isOnDrop }: AreaChartPropsType): JSX.Element => {
   const data = useAppSelector((state) => state.data.graphValues);
 
   const values = {
@@ -69,7 +73,9 @@ export const AreaChart = (): JSX.Element => {
   };
 
   return (
-    <div className={styles.chartContainer}>
+    <div
+      className={isOnDrop ? `${styles.chartContainer1}` : styles.chartContainer}
+    >
       <div className={styles.titleContainer}>
         <div className={styles.title}>Потребление</div>{" "}
       </div>

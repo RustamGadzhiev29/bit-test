@@ -1,66 +1,138 @@
-.priceCounterContainer {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+@import "src/styles/variables";
+@import "src/styles/mixins";
 
+.priceCounterContainer {
+  @include flexStyle(column, center, flex-start);
   position: relative;
   width: 252px;
   height: 252px;
-
-  background: #ffffff;
-  border: 1px solid #005fb8;
+  background: $textColor2;
+  border: 1px solid $mainColor;
   border-radius: 50%;
   overflow: hidden;
+  @include text($mainColor, $mainFont, 25px, 400, 20px);
 
   .price {
-    color: #005fb8;
-    font-family: Roboto;
-    font-size: 25px;
-    font-weight: 400;
-    line-height: 20px;
-    text-align: center;
+    @include text($mainColor, $mainFont, 25px, 400, 20px);
     margin-top: 31px;
   }
   .priceDisplay {
-    font-family: "Roboto";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 70px;
-    line-height: 70px;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-    color: #000000;
+    @include flexStyle(row, center, center);
+    @include text($textColor1, $mainFont, 70px, 400, 70px);
     margin: 20px 0 0 0;
   }
   .priceDescription {
-    font-family: "Roboto";
-    font-style: normal;
-    font-weight: 400;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-    color: #000000;
+    @include flexStyle(row, center, center);
+    color: $textColor1;
   }
   .plan {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #005fb8;
+    @include flexStyle(row, center, center);
+    background-color: $mainColor;
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    color: #ffff;
-    text-align: center;
+    @include text($textColor2, $mainFont, 20px, 400, 24px);
     height: 64px;
-    font-family: "Roboto";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
-   
   }
 }
+
+.dropPriceCounterContainer {
+  @include flexStyle(column, center, flex-start);
+  position: relative;
+  width: 389px;
+  height: 389px;
+  background: $textColor2;
+  border: 1px solid $mainColor;
+  border-radius: 50%;
+  overflow: hidden;
+
+  .price {
+    @include text($mainColor, $mainFont, 35px, 400, 41px);
+    margin-top: 31px;
+  }
+  .priceDisplay {
+    @include flexStyle(row, center, center);
+    @include text($textColor1, $mainFont, 100px, 300, 117px);
+    margin: 20px 0 0 0;
+  }
+  .priceDescription {
+    @include flexStyle(row, center, center);
+    @include text($textColor1, $mainFont, 35px, 400, 24px);
+  }
+  .plan {
+    @include flexStyle(row, center, center);
+    background-color: $mainColor;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    @include text($textColor2, $mainFont, 30px, 400, 40px);
+    height: 99px;
+  }
+}
+// .priceCounterContainer1 {
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+
+//   position: relative;
+//   width: 389px;
+//   height: 389px;
+
+//   // background: #ffffff;
+//   // border: 1px solid #005fb8;
+//   // border-radius: 50%;
+//   // overflow: hidden;
+
+//   .price {
+//     // color: #005fb8;
+//     // font-family: Roboto;
+//     font-size: 35px;
+//     // font-weight: 400;
+//     line-height: 41px;
+//     // text-align: center;
+//     margin-top: 48px;
+//   }
+//   .priceDisplay {
+//     // font-family: "Roboto";
+//     // font-style: normal;
+//     font-weight: 300;
+//     font-size: 100px;
+//     line-height: 117px;
+//     // display: flex;
+//     // align-items: center;
+//     // text-align: center;
+//     // justify-content: center;
+//     // color: #000000;
+//     margin: 20px 0 0 0;
+//   }
+//   .priceDescription {
+//     // font-family: "Roboto";
+//     // font-style: normal;
+//     font-weight: 400;
+//     font-size: 35px;
+//     // display: flex;
+//     // align-items: center;
+//     // text-align: center;
+//     // justify-content: center;
+//     // color: #000000;
+//   }
+//   .plan {
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     background-color: #005fb8;
+//     position: absolute;
+//     bottom: 0;
+//     left: 0;
+//     right: 0;
+//     color: #ffff;
+//     text-align: center;
+//     height: 99px;
+//     font-family: "Roboto";
+//     font-style: normal;
+//     font-weight: 400;
+//     font-size: 30px;
+//   }
+// }

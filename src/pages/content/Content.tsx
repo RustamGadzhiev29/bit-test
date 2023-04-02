@@ -1,31 +1,41 @@
-/* eslint-disable no-loop-func */
-/* eslint-disable no-unused-expressions */
-/* eslint-disable no-undef */
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 
-import gear from "../../common/assets/images/gear.svg";
+import { ReactComponent as Gear } from "../../common/assets/images/gear.svg";
 import DisplayWrapper from "../../components/displayWrapper/DisplayWrapper";
 import { AreaChart } from "../../components/graph/AreaChart";
 import PriceBoard from "../../components/priceBoard/PriceBoard";
-import DataTable from "../../components/table/Table";
+import Table from "../../components/table/Table";
 import { insertByIndex } from "../../helpers/helpers";
+import {
+  setControlValueTC,
+  setGraphValuesTC,
+  setTableValuesTC,
+} from "../../store/slice/slice";
+import { useTypedDispatch } from "../../store/store";
 
 import styles from "./Content.module.scss";
 
+export type OnDropPropsType = {
+  isOnDrop?: boolean;
+};
+
 export type DisplayBlockType = {
   id: number;
-  elem: () => JSX.Element;
+  elem: ({ isOnDrop }: OnDropPropsType) => JSX.Element;
   use: boolean;
 };
+
+const LENGTH_VALUE = 3;
+const MINUTE_INTERVAL_VALUE = 60000;
+const FIVESEC_INTERVAL_VALUE = 5000;
 
 const Content: FC = () => {
   // console.log("content");
 
   const [isOpen, setIsOpen] = useState(false);
+  const [isActive, setIsActive] = useState(false);
 
-  const [currentItems, setCurrentItems] = useState<null | number>(null);
+  const [currentItemId, setCurrentItemId] = useState<null | number>(null);
   const [arrForRender, setArrForRender] = useState<DisplayBlockType[] | []>([]);
   const [usedElements, setUsedElements] = useState<DisplayBlockType[]>([
     {
@@ -40,49 +50,78 @@ const Content: FC = () => {
     },
     {
       id: 3,
-      elem: DataTable,
+      elem: Table,
       use: false,
     },
   ]);
 
   const [dropItem, setDropItem] = useState<number | null>(null);
   const [startItem, setStartItem] = useState<number | null>(null);
-  const [backDropZone, setBackDropZone] = useState<boolean>(false);
+  const [isOnDrop, setOnDrop] = useState<boolean>(false);
+
+  const dispatch = useTypedDispatch();
+
+  useEffect(() => {
+    const graphValuesTimer = setInterval(
+      () => dispatch(setGraphValuesTC()),
+      FIVESEC_INTERVAL_VALUE
+    );
+    const tableValuesTimer = setInterval(
+      () => dispatch(setTableValuesTC()),
+      MINUTE_INTERVAL_VALUE
+    );
+
+    const controlValueTimer = setInterval(
+      () => dispatch(setControlValueTC()),
+      MINUTE_INTERVAL_VALUE
+    );
+
+    dispatch(setGraphValuesTC());
+    dispatch(setTableValuesTC());
+    dispatch(setControlValueTC());
+
+    return () => {
+      clearInterval(graphValuesTimer);
+      clearInterval(tableValuesTimer);
+      clearInterval(controlValueTimer);
+    };
+  }, []);
+
+  const onGearBtn = (): void => {
+    setIsActive(!isActive);
+    setIsOpen(!isOpen);
+  };
+
+  console.log(arrForRender);
+
   const onDropHandler = (e: React.DragEvent<HTMLDivElement>): void => {
     e.preventDefault();
-    setBackDropZone(false);
-
+    setOnDrop(true);
     if (
-      arrForRender.every((item: DisplayBlockType) => item.id !== currentItems)
+      arrForRender.every((item: DisplayBlockType) => item.id !== currentItemId)
     ) {
       for (let i = 0; i < usedElements.length; i += 1) {
         if (arrForRender.length === 0) {
           setArrForRender(
             usedElements.filter(
-              (elem: DisplayBlockType) => elem.id === currentItems
+              (elem: DisplayBlockType) => elem.id === currentItemId
             )
           );
         }
-        if (usedElements[i].id === currentItems) {
-          if (currentItems === 1) {
+        if (usedElements[i].id === currentItemId) {
+          if (dropItem) {
+            setArrForRender((prev: DisplayBlockType[] | []) =>
+              insertByIndex(prev, dropItem, usedElements[i])
+            );
+          } else
             setArrForRender((prev: DisplayBlockType[] | []) => [
-              usedElements[i],
               ...prev,
+              usedElements[i],
             ]);
-          } else {
-            dropItem
-              ? setArrForRender((prev: DisplayBlockType[] | []) =>
-                  insertByIndex(prev, dropItem, usedElements[i])
-                )
-              : setArrForRender((prev: DisplayBlockType[] | []) => [
-                  ...prev,
-                  usedElements[i],
-                ]);
-          }
 
           const newArr = [...usedElements];
           const index = newArr.findIndex(
-            (obj: DisplayBlockType) => obj.id === currentItems
+            (obj: DisplayBlockType) => obj.id === currentItemId
           );
 
           newArr[index].use = true;
@@ -94,19 +133,16 @@ const Content: FC = () => {
 
   const dragOverHandler = (e: React.DragEvent<HTMLDivElement>): void => {
     e.preventDefault();
-    setBackDropZone(true);
   };
 
   const dragLeaveHandler = (e: React.DragEvent<HTMLDivElement>): void => {
     e.preventDefault();
-    setBackDropZone(false);
   };
 
   const dragStartHandlerItem = (id: number): void => {
     setStartItem(id);
   };
   const onDropHandlerItem = (item: DisplayBlockType): void => {
-    if (startItem === 1) return;
     if (item.id === startItem) return;
 
     const indexToRemove = arrForRender.findIndex(
@@ -130,7 +166,6 @@ const Content: FC = () => {
         );
       }
     }
-
     setDropItem(null);
   };
   const dragLeaveHandlerItem = (e: React.DragEvent<HTMLDivElement>): void => {
@@ -146,13 +181,7 @@ const Content: FC = () => {
   ): void => {
     e.preventDefault();
     setDropItem(item.id);
-    console.log(dropItem);
   };
-
-  // const calculatorWrapperStyle = () => {
-  //   if (arrForRender.length !== 0) return "nonempty";
-  //   if (backDropZone) return "active";
-  // };
 
   const handleDoubleClick = (id: number): void => {
     setArrForRender(arrForRender.filter((elem) => elem.id !== id));
@@ -163,49 +192,51 @@ const Content: FC = () => {
     setUsedElements(newArr);
   };
 
+  console.log(currentItemId);
+
   return (
     <div
-      className={styles.container}
+      className={styles.contentContainer}
       onDragOver={(e: React.DragEvent<HTMLDivElement>) => dragOverHandler(e)}
       onDrop={(e: React.DragEvent<HTMLDivElement>) => onDropHandler(e)}
       onDragLeave={(e: React.DragEvent<HTMLDivElement>) => dragLeaveHandler(e)}
     >
-      <div className={styles.contentContainer}>
-        <div className={styles.button}>
-          <img
-            onClick={() => setIsOpen(true)}
-            className={styles.buttonIcon}
-            src={gear}
-            alt="logo"
+      <div className={styles.button}>
+        <Gear
+          className={
+            isActive
+              ? `${styles.buttonIcon} ${styles.active}`
+              : styles.buttonIcon
+          }
+          onClick={onGearBtn}
+        />
+      </div>
+      <div className={styles.content}>
+        {isOpen && arrForRender.length !== LENGTH_VALUE && (
+          <DisplayWrapper
+            usedElements={usedElements}
+            setCurrentItemId={setCurrentItemId}
           />
-        </div>
-        <div className={styles.content}>
-          {isOpen && (
-            <DisplayWrapper
-              usedElements={usedElements}
-              setCurrentItems={setCurrentItems}
-              arrForRender={arrForRender}
-            />
-          )}
-          {arrForRender.map((item: DisplayBlockType) => {
-            const Component = item.elem;
+        )}
+        {arrForRender.map((item: DisplayBlockType) => {
+          const Component = item.elem;
 
-            return (
-              <div
-                key={item.id}
-                draggable={!(item.id === 1)}
-                onDragOver={(e) => dragOverHandlerItem(e, item)}
-                onDrop={() => onDropHandlerItem(item)}
-                onDragStart={() => dragStartHandlerItem(item.id)}
-                onDragLeave={(e) => dragLeaveHandlerItem(e)}
-                onDragEnd={() => dragEndHandlerItem()}
-                onDoubleClick={() => handleDoubleClick(item.id)}
-              >
-                <Component />
-              </div>
-            );
-          })}
-        </div>
+          return (
+            <div
+              className={styles.gridItem}
+              key={item.id}
+              draggable
+              onDragOver={(e) => dragOverHandlerItem(e, item)}
+              onDrop={() => onDropHandlerItem(item)}
+              onDragStart={() => dragStartHandlerItem(item.id)}
+              onDragLeave={(e) => dragLeaveHandlerItem(e)}
+              onDragEnd={() => dragEndHandlerItem()}
+              onDoubleClick={() => handleDoubleClick(item.id)}
+            >
+              <Component isOnDrop={isOnDrop} />
+            </div>
+          );
+        })}
       </div>
     </div>
   );

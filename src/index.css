@@ -37,27 +37,3 @@ code {
 .ant-menu-light .ant-menu-item-selected {
   background-color: #E0F1FF;
 }
-.ant-table-wrapper .ant-table.ant-table-small {
-  font-size: 5px;
-}
-.ant-table-wrapper .ant-table-thead >tr>th {
-  background: #005FB8;
-  color: #ffff;
-  border-bottom: 0px;
-  font-weight: 400;
-}
-.ant-table-wrapper .ant-table {
-  line-height: 0;
-  font-family: "Roboto";
-  font-weight: 400;
-  color: #000000;
-}
-.ant-table-tbody > tr > td {
-  height: 20px;
-}
-.ant-table-wrapper .ant-table-thead {
-  height: 19px;
-}
-.ant-table-wrapper table {
-  text-align: center;
-}

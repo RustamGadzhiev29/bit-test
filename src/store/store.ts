@@ -1,11 +1,10 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { AnyAction, combineReducers } from "redux";
 import thunkMiddleware, { ThunkDispatch } from "redux-thunk";
 
 import { dataReducer } from "./slice/slice";
-
-// import { dataReducer } from "./slice";
 
 const rootReducer = combineReducers({
   data: dataReducer,

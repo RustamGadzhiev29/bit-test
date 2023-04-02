@@ -1,51 +1,72 @@
 @import "src/styles/variables";
 @import "src/styles/mixins";
 
-.container {
+.contentContainer {
   background-color: #e0f1ff;
   margin-left: 236px;
-
-  // @media (max-width: 768px) {
-  //   width: 87.5%;
-  //   margin: 0 auto;
-  // }
-
-  .contentContainer {
-    min-height: 87vh;
-    position: relative;
-    overflow: "auto";
-    position: relative;
-
-    &:before {
+  min-height: 934px;
+  position: relative;
+  overflow: "auto";
+  position: relative;
+  margin-top: 90px;
+    &::before {
       @include pseudoEl(300px, 200px);
       @include vector(50%, 10%);
     }
-    &:after {
+    &::after {
       @include pseudoEl(300px, 200px);
       @include vectorHorizon(15%, 50%);
+  }
+  @media (max-width: 1260px) {
+    &::before {
+      content:none
     }
-    .button {
-      display: flex;
-      justify-content: flex-end;
+    &::after {
+      content:none
+  }
+  }
+  @media (max-width: 768px) {
+    margin-left: 0px;
+  }
+  
+  .button {
+    display: flex;
+    justify-content: flex-end;
+    position: absolute;
+    right: 0;
 
-      .buttonIcon {
-        cursor: pointer;
-        margin-top: 20px;
-        margin-right: 20px;
-        width: 29px;
-        height: 29px;
-      }
+    .buttonIcon {
+      cursor: pointer;
+      margin-top: 20px;
+      margin-right: 20px;
+      width: 29px;
+      height: 29px;
+      color: #000;
+      transition: all 0.3s ease 0s;
     }
-    .content {
-      display: grid;
-      gap: 10px;
-      grid-template-columns: 50% 50%;
-      grid-template-rows: 50% 50%;
-      height: 100vh;
+    .active {
+      color: #005fb8;
+      transform: rotate(90deg);
+    }
+  }
+  .content {
+    display: flex;
+    flex-flow: wrap-reverse;
+    width: 100%;
+    box-sizing:border-box;
+    min-height: 934px;
+    align-items: center;
+    .gridItem {
+      width:calc(100%/2);
+      height: 100%;
+      box-sizing:border-box;
+      display: flex;
       justify-content: center;
-      justify-items: center;
-      align-content: center;
       align-items: center;
+      @media (max-width: 1260px) {
+        width:100%;
+        padding: 20px 10px 10px 10px;
+      }
     }
   }
 }
