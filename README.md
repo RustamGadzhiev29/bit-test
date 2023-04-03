@@ -15,4 +15,4 @@ This project was bootstrapped with Create React App.
 * Redux-toolkit
 * SCSS
 * DnD
-# [View a demo](https://rustamgadzhiev29.github.io/main)
+# [View a demo](https://rustamgadzhiev29.github.io/bit-test)
